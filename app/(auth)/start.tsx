@@ -1,53 +1,44 @@
 // app/(auth)/start.tsx
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	StyleSheet,
+	SafeAreaView,
+} from 'react-native';
 import { useRouter } from 'expo-router';
+import { rootStyles } from '@/styles/rootStyles';
+import { authStyles } from '@/styles/authStyles';
 
 export default function StartScreen() {
-  const router = useRouter();
+	const router = useRouter();
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bem-vindo 👋</Text>
+	return (
+		<SafeAreaView style={rootStyles.container}>
+			<View style={authStyles.container}>
+				<View>
+					<Text style={authStyles.title}>RedeCripto</Text>
+					<Text style={authStyles.subtitle}>
+						Acompanhe suas carteiras de criptomoedas em diferentes redes
+					</Text>
+				</View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push('/sign-in')}
-      >
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+				<View style={authStyles.startButtonsContainer}>
+					<TouchableOpacity
+						style={authStyles.button}
+						onPress={() => router.push('/sign-in')}
+					>
+						<Text style={authStyles.buttonText}>Entrar</Text>
+					</TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.buttonOutline}
-        onPress={() => router.push('/sign-up')}
-      >
-        <Text style={styles.outlineText}>Criar conta</Text>
-      </TouchableOpacity>
-    </View>
-  );
+					<TouchableOpacity
+						style={authStyles.outlinedButton}
+						onPress={() => router.push('/sign-up')}
+					>
+						<Text style={authStyles.buttonText}>Criar conta</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		</SafeAreaView>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 40 },
-  button: {
-    backgroundColor: '#2563EB',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  buttonText: { color: '#fff', fontSize: 16 },
-  buttonOutline: {
-    borderColor: '#2563EB',
-    borderWidth: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-  },
-  outlineText: { color: '#2563EB', fontSize: 16 },
-});
