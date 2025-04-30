@@ -11,7 +11,7 @@ import {
 	SafeAreaView,
 } from 'react-native';
 import { authStyles } from '../../styles/authStyles';
-import { setAuthToken } from '@/services/api';
+// import { setAuthToken } from '@/services/api';
 import { rootStyles } from '@/styles/rootStyles';
 import { theme } from '@/constants/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -85,7 +85,7 @@ export default function SignUpScreen() {
 				const token = await getToken();
 
 				if (token) {
-					setAuthToken(token);
+				//	setAuthToken(token);
 				}
 				router.replace('/');
 			} else {

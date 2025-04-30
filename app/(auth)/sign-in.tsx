@@ -15,7 +15,7 @@ import { Link, useRouter } from 'expo-router';
 import { authStyles } from '../../styles/authStyles';
 import { useWarmUpBrowser } from '@/utils/warm-up-browser';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { setAuthToken } from '@/services/api';
+//import { setAuthToken } from '@/services/api';
 import { rootStyles } from '@/styles/rootStyles';
 import { Separator } from '@/components/Separator';
 import { theme } from '@/constants/theme';
@@ -46,7 +46,7 @@ export default function SignInPage() {
 					const token = await getToken();
 
 					if (token) {
-						setAuthToken(token);
+					//	setAuthToken(token);
 					}
 
 					router.replace('/');
@@ -79,7 +79,7 @@ export default function SignInPage() {
 				const token = await getToken();
 
 				if (token) {
-					setAuthToken(token);
+				//	setAuthToken(token);
 				}
 
 				router.replace('/');
