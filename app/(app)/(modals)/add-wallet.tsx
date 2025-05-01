@@ -55,7 +55,7 @@ import {
       setTimeout(() => {
         Alert.alert("Sucesso", "Carteira adicionada!");
         setIsLoading(false);
-        router.push("/wallets");
+        router.push("/wallet");
       }, 1000);
     };
    
@@ -159,10 +159,10 @@ import {
                   }
                 }}
                 style={styles.picker}
-                itemStyle={{ color: "#FFF" }} // For iOS
+                // itemStyle={{ color: "#FFF" }} // For iOS
               >
                 {Object.keys(networkIcons).map((net) => (
-                  <Picker.Item label={net} value={net} key={net} color="#FFF" />
+                  <Picker.Item label={net} value={net} key={net} />
                 ))}
               </Picker>
    
