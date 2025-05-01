@@ -159,7 +159,6 @@ import {
                   }
                 }}
                 style={styles.picker}
-                // itemStyle={{ color: "#FFF" }} // For iOS
               >
                 {Object.keys(networkIcons).map((net) => (
                   <Picker.Item label={net} value={net} key={net} />
