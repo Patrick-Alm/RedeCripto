@@ -14,7 +14,7 @@ export default function ModalsLayout() {
       }}
     >
       <Stack.Screen
-        name="add_wallet"
+        name="add-wallet"
         options={{
           title: "Adicionar Carteira",
         }}
