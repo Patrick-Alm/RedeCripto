@@ -1,30 +1,22 @@
-import { useAuth, useSignUp } from '@clerk/clerk-expo';
-import { Link, useRouter } from 'expo-router';
-import { useState } from 'react';
-import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	Alert,
-	ActivityIndicator,
-	SafeAreaView,
-} from 'react-native';
-import { authStyles } from '../../styles/authStyles';
-// import { setAuthToken } from '@/services/api';
-import { rootStyles } from '@/styles/rootStyles';
-import { theme } from '@/constants/theme';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { theme } from "@/constants/theme";
+import { setAuthToken } from "@/services/config/api";
+import { rootStyles } from "@/styles/rootStyles";
+import { useAuth, useSignUp } from "@clerk/clerk-expo";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Link, useRouter } from "expo-router";
+import { useState } from "react";
+import { Alert, SafeAreaView, Text, TextInput, View } from "react-native";
+import { authStyles } from "../../styles/authStyles";
 
 export default function SignUpScreen() {
 	const { isLoaded, signUp, setActive } = useSignUp();
 	const { getToken } = useAuth();
 	const router = useRouter();
 
-	const [emailAddress, setEmailAddress] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
-	const [code, setCode] = useState('');
+	const [emailAddress, setEmailAddress] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [code, setCode] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [pendingVerification, setPendingVerification] = useState(false);
 
@@ -32,21 +24,21 @@ export default function SignUpScreen() {
 		if (!isLoaded) return;
 		setLoading(true);
 
-		if (emailAddress === '' || password === '' || confirmPassword === '') {
-			Alert.alert('Erro ao criar conta', 'Preencha todos os campos.');
+		if (emailAddress === "" || password === "" || confirmPassword === "") {
+			Alert.alert("Erro ao criar conta", "Preencha todos os campos.");
 			setLoading(false);
 			return;
 		}
 		if (password !== confirmPassword) {
-			Alert.alert('Erro ao criar conta', 'As senhas não coincidem.');
+			Alert.alert("Erro ao criar conta", "As senhas não coincidem.");
 			setLoading(false);
 			return;
 		}
 
 		if (password.length < 8) {
 			Alert.alert(
-				'Erro ao criar conta',
-				'A senha deve ter pelo menos 6 caracteres.',
+				"Erro ao criar conta",
+				"A senha deve ter pelo menos 6 caracteres.",
 			);
 			setLoading(false);
 			return;
@@ -58,13 +50,13 @@ export default function SignUpScreen() {
 				password,
 			});
 
-			await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+			await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
 			setPendingVerification(true);
 		} catch (err: any) {
 			Alert.alert(
-				'Erro ao criar conta',
-				err?.errors?.[0]?.message || 'Tente novamente.',
+				"Erro ao criar conta",
+				err?.errors?.[0]?.message || "Tente novamente.",
 			);
 			console.error(err);
 		} finally {
@@ -80,22 +72,22 @@ export default function SignUpScreen() {
 				code,
 			});
 
-			if (signUpAttempt.status === 'complete') {
+			if (signUpAttempt.status === "complete") {
 				await setActive({ session: signUpAttempt.createdSessionId });
 				const token = await getToken();
 
 				if (token) {
-				//	setAuthToken(token);
+					setAuthToken(token);
 				}
-				router.replace('/');
+				router.replace("/");
 			} else {
 				console.error(JSON.stringify(signUpAttempt, null, 2));
 			}
 		} catch (err: any) {
 			console.error(JSON.stringify(err, null, 2));
 			Alert.alert(
-				'Erro ao criar conta',
-				err?.errors?.[0]?.message || 'Tente novamente.',
+				"Erro ao criar conta",
+				err?.errors?.[0]?.message || "Tente novamente.",
 			);
 		}
 	};
@@ -123,7 +115,7 @@ export default function SignUpScreen() {
 						<FontAwesome.Button
 							name="envelope-o"
 							onPress={onVerifyPress}
-							style={{ ...authStyles.button, justifyContent: 'center' }}
+							style={{ ...authStyles.button, justifyContent: "center" }}
 						>
 							Verificar
 						</FontAwesome.Button>
@@ -177,7 +169,7 @@ export default function SignUpScreen() {
 					<FontAwesome.Button
 						name="user-o"
 						onPress={handleSignUp}
-						style={{ ...authStyles.button, justifyContent: 'center' }}
+						style={{ ...authStyles.button, justifyContent: "center" }}
 						disabled={loading}
 					>
 						Entrar com email

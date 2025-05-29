@@ -1,30 +1,21 @@
-import { useAuth, useSignIn, useSSO } from '@clerk/clerk-expo';
-import { useCallback, useState } from 'react';
-import * as AuthSession from 'expo-auth-session';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import {
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	Alert,
-	ActivityIndicator,
-	SafeAreaView,
-} from 'react-native';
-import { Link, useRouter } from 'expo-router';
-import { authStyles } from '../../styles/authStyles';
-import { useWarmUpBrowser } from '@/utils/warm-up-browser';
-import Ionicons from '@expo/vector-icons/Ionicons';
-//import { setAuthToken } from '@/services/api';
-import { rootStyles } from '@/styles/rootStyles';
-import { Separator } from '@/components/Separator';
-import { theme } from '@/constants/theme';
+import { Separator } from "@/components/Separator";
+import { theme } from "@/constants/theme";
+import { setAuthToken } from "@/services/config/api";
+import { rootStyles } from "@/styles/rootStyles";
+import { useWarmUpBrowser } from "@/utils/warm-up-browser";
+import { useAuth, useSSO, useSignIn } from "@clerk/clerk-expo";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import * as AuthSession from "expo-auth-session";
+import { Link, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { Alert, SafeAreaView, Text, TextInput, View } from "react-native";
+import { authStyles } from "../../styles/authStyles";
 
 export default function SignInPage() {
 	useWarmUpBrowser();
 
-	const [emailAddress, setEmailAddress] = useState('');
-	const [password, setPassword] = useState('');
+	const [emailAddress, setEmailAddress] = useState("");
+	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 
 	const { startSSOFlow } = useSSO();
@@ -33,7 +24,7 @@ export default function SignInPage() {
 	const router = useRouter();
 
 	const handleOAuth = useCallback(
-		async (strategy: 'oauth_google' | 'oauth_github') => {
+		async (strategy: "oauth_google" | "oauth_github") => {
 			try {
 				setLoading(true);
 				const { createdSessionId } = await startSSOFlow({
@@ -46,16 +37,16 @@ export default function SignInPage() {
 					const token = await getToken();
 
 					if (token) {
-					//	setAuthToken(token);
+						setAuthToken(token);
 					}
 
-					router.replace('/');
+					router.replace("/");
 				}
 			} catch (err: any) {
 				console.error(err);
 				Alert.alert(
-					'Erro no login social',
-					'Não foi possível entrar com o provedor selecionado.',
+					"Erro no login social",
+					"Não foi possível entrar com o provedor selecionado.",
 				);
 			} finally {
 				setLoading(false);
@@ -74,24 +65,24 @@ export default function SignInPage() {
 				password,
 			});
 
-			if (signInAttempt.status === 'complete') {
+			if (signInAttempt.status === "complete") {
 				await setActive({ session: signInAttempt.createdSessionId });
 				const token = await getToken();
 
 				if (token) {
-				//	setAuthToken(token);
+					setAuthToken(token);
 				}
 
-				router.replace('/');
+				router.replace("/");
 			} else {
 				Alert.alert(
-					'Atenção',
-					'Etapas adicionais são necessárias para o login.',
+					"Atenção",
+					"Etapas adicionais são necessárias para o login.",
 				);
 			}
 		} catch (err: any) {
 			console.error(err);
-			Alert.alert('Erro ao entrar', 'Verifique seu email e senha.');
+			Alert.alert("Erro ao entrar", "Verifique seu email e senha.");
 		} finally {
 			setLoading(false);
 		}
@@ -112,14 +103,14 @@ export default function SignInPage() {
 					<View style={authStyles.socialContainer}>
 						<FontAwesome.Button
 							name="google"
-							onPress={() => handleOAuth('oauth_google')}
+							onPress={() => handleOAuth("oauth_google")}
 							style={authStyles.socialButton}
 						>
 							Entrar com Google
 						</FontAwesome.Button>
 						<FontAwesome.Button
 							name="github"
-							onPress={() => handleOAuth('oauth_github')}
+							onPress={() => handleOAuth("oauth_github")}
 							style={authStyles.socialButton}
 						>
 							Entrar com GitHub
@@ -151,7 +142,7 @@ export default function SignInPage() {
 						<FontAwesome.Button
 							name="envelope-o"
 							onPress={handleSignIn}
-							style={{ ...authStyles.button, justifyContent: 'center' }}
+							style={{ ...authStyles.button, justifyContent: "center" }}
 							disabled={loading}
 						>
 							Entrar com email

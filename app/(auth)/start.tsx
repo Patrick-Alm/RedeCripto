@@ -1,14 +1,7 @@
-// app/(auth)/start.tsx
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	StyleSheet,
-	SafeAreaView,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { rootStyles } from '@/styles/rootStyles';
-import { authStyles } from '@/styles/authStyles';
+import { authStyles } from "@/styles/authStyles";
+import { rootStyles } from "@/styles/rootStyles";
+import { useRouter } from "expo-router";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 export default function StartScreen() {
 	const router = useRouter();
@@ -26,14 +19,14 @@ export default function StartScreen() {
 				<View style={authStyles.startButtonsContainer}>
 					<TouchableOpacity
 						style={authStyles.button}
-						onPress={() => router.push('/sign-in')}
+						onPress={() => router.push("/sign-in")}
 					>
 						<Text style={authStyles.buttonText}>Entrar</Text>
 					</TouchableOpacity>
 
 					<TouchableOpacity
 						style={authStyles.outlinedButton}
-						onPress={() => router.push('/sign-up')}
+						onPress={() => router.push("/sign-up")}
 					>
 						<Text style={authStyles.buttonText}>Criar conta</Text>
 					</TouchableOpacity>
