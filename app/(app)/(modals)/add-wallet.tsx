@@ -22,7 +22,7 @@ export default function AddWalletScreen() {
 	const router = useRouter();
 	const [name, setName] = useState("");
 	const [address, setAddress] = useState("");
-	const [network, setNetwork] = useState("Ethereum");
+	const [network, setNetwork] = useState("eth-mainnet");
 	const [showPicker, setShowPicker] = useState(false);
 
 	const {
@@ -31,13 +31,30 @@ export default function AddWalletScreen() {
 		error,
 	} = useCreateWallet();
 
-	const networkIcons: Record<string, string> = {
-		Ethereum: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-		Bitcoin: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-		"Binance Smart Chain": "https://cryptologos.cc/logos/bnb-bnb-logo.png",
-		Polygon: "https://cryptologos.cc/logos/polygon-matic-logo.png",
-		Solana: "https://cryptologos.cc/logos/solana-sol-logo.png",
-	};
+	const networks = [
+		{
+			icon: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+			label: "Ethereum",
+			value: "eth-mainnet",
+		},
+		{
+			icon: "https://cryptologos.cc/logos/bnb-bnb-logo.png",
+			label: "Binance Smart Chain",
+			value: " bnb-mainnet",
+		},
+		{
+			icon: "https://cryptologos.cc/logos/polygon-matic-logo.png",
+			label: "Polygon",
+			value: "polygon-mainnet",
+		},
+		{
+			icon: "https://cryptologos.cc/logos/solana-sol-logo.png",
+			label: "Solana",
+			value: "solana-mainnet",
+		},
+	];
+
+	const selectedNetwork = networks.find((n) => n.value === network);
 
 	const handleSubmit = () => {
 		if (!name.trim()) {
@@ -88,7 +105,9 @@ export default function AddWalletScreen() {
 				style={styles.pickerButton}
 				onPress={() => setShowPicker(true)}
 			>
-				<Text style={styles.pickerButtonText}>{network}</Text>
+				<Text style={styles.pickerButtonText}>
+					{selectedNetwork ? selectedNetwork.label : "Ethereum"}
+				</Text>
 				<MaterialCommunityIcons name="chevron-down" size={20} color="#AAA" />
 			</TouchableOpacity>
 
@@ -96,13 +115,7 @@ export default function AddWalletScreen() {
 			<View style={styles.row}>
 				<TextInput
 					style={[styles.input, { flex: 1 }]}
-					placeholder={
-						network === "Bitcoin"
-							? "bc1..."
-							: network === "Solana"
-								? "HN7c..."
-								: "0x..."
-					}
+					placeholder={network === "solana-mainnet" ? "HN7c..." : "0x..."}
 					placeholderTextColor="#666"
 					value={address}
 					onChangeText={setAddress}
@@ -157,8 +170,12 @@ export default function AddWalletScreen() {
 							}}
 							style={styles.picker}
 						>
-							{Object.keys(networkIcons).map((net) => (
-								<Picker.Item label={net} value={net} key={net} />
+							{networks.map((network) => (
+								<Picker.Item
+									label={network.label}
+									value={network.value}
+									key={network.value}
+								/>
 							))}
 						</Picker>
 						{Platform.OS === "ios" && (

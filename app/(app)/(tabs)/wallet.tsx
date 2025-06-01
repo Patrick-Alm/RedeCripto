@@ -23,6 +23,13 @@ export default function WalletsScreen() {
 		router.push("/(app)/(modals)/add-wallet");
 	};
 
+	const networksMap: Record<string, string> = {
+		"eth-mainnet": "Ethereum",
+		"polygon-mainnet": "Polygon",
+		"solana-mainnet": "Solana",
+		"bnb-mainnet": "Binance Smart Chain",
+	};
+
 	const renderWalletItem = ({ item }: { item: Wallet }) => (
 		<TouchableOpacity
 			style={walletStyles.card}
@@ -31,7 +38,9 @@ export default function WalletsScreen() {
 			<View style={walletStyles.info}>
 				<Text style={walletStyles.name}>{item.name}</Text>
 				<Text style={walletStyles.address}>{formatAddress(item.address)}</Text>
-				<Text style={walletStyles.network}>{item.network}</Text>
+				<Text style={walletStyles.network}>
+					{networksMap[item.network] ?? item.network}
+				</Text>
 			</View>
 			<View style={walletStyles.balance}>
 				{/* <Text style={walletStyles.balanceText}>
@@ -102,12 +111,6 @@ export default function WalletsScreen() {
 					<Text style={walletStyles.emptyText}>
 						Você ainda não tem carteiras cadastradas
 					</Text>
-					<TouchableOpacity
-						style={walletStyles.addButton}
-						onPress={handleAddWallet}
-					>
-						<Text style={walletStyles.addText}>Adicionar Carteira</Text>
-					</TouchableOpacity>
 				</View>
 			)}
 		</SafeAreaView>
