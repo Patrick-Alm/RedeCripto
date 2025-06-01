@@ -29,6 +29,15 @@ export const walletStyles = StyleSheet.create({
 	},
 	info: {
 		flex: 1,
+		flexDirection: "row",
+		alignItems: "center",
+		gap: theme.spacing.sm,
+	},
+	networkIcon: {
+		width: 36,
+		height: 36,
+		marginBottom: theme.spacing.xs,
+		borderRadius: theme.radii.lg,
 	},
 	name: {
 		fontSize: theme.fontSizes.md,

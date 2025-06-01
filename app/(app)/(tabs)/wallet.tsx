@@ -9,10 +9,12 @@ import {
 	ActivityIndicator,
 	Alert,
 	FlatList,
+	Image,
 	Text,
 	TouchableOpacity,
 	View,
 } from "react-native";
+import type { ImageSourcePropType } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WalletsScreen() {
@@ -30,22 +32,35 @@ export default function WalletsScreen() {
 		"bnb-mainnet": "Binance Smart Chain",
 	};
 
+	const networkImages: Record<string, ImageSourcePropType> = {
+		"eth-mainnet": require("../../../assets/images/ethereum-eth-logo.png"),
+		"polygon-mainnet": require("../../../assets/images/polygon-matic-logo.png"),
+		"solana-mainnet": require("../../../assets/images/solana-mainnet.png"),
+		"bnb-mainnet": require("../../../assets/images/bnb-bnb-logo.png"),
+	};
+
 	const renderWalletItem = ({ item }: { item: Wallet }) => (
 		<TouchableOpacity
 			style={walletStyles.card}
 			onPress={() => Alert.alert("Carteira", `Detalhes de ${item.name}`)}
 		>
 			<View style={walletStyles.info}>
-				<Text style={walletStyles.name}>{item.name}</Text>
-				<Text style={walletStyles.address}>{formatAddress(item.address)}</Text>
-				<Text style={walletStyles.network}>
-					{networksMap[item.network] ?? item.network}
-				</Text>
-			</View>
-			<View style={walletStyles.balance}>
-				{/* <Text style={walletStyles.balanceText}>
-					{item.balance || "Carregando..."}
-				</Text> */}
+				<Image
+					source={
+						networkImages[item.network] ||
+						require("../../../assets/images/ethereum-eth-logo.png")
+					}
+					style={walletStyles.networkIcon}
+				/>
+				<View>
+					<Text style={walletStyles.name}>{item.name}</Text>
+					<Text style={walletStyles.address}>
+						{formatAddress(item.address)}
+					</Text>
+					<Text style={walletStyles.network}>
+						{networksMap[item.network] ?? item.network}
+					</Text>
+				</View>
 			</View>
 		</TouchableOpacity>
 	);
