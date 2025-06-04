@@ -1,5 +1,5 @@
 import { useCreateWallet } from "@/hooks/wallet/use-create-wallet";
-import type { WalletPayload } from "@/services/wallet/types";
+import type { WalletPayload } from "@/services/wallet";
 import { appStyles } from "@/styles/appStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
