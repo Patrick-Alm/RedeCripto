@@ -5,9 +5,9 @@ import { walletStyles } from "@/styles/walletStyles";
 import { formatAddress } from "@/utils/format-address";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
 	ActivityIndicator,
-	Alert,
 	FlatList,
 	Image,
 	Text,
@@ -19,7 +19,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WalletsScreen() {
 	const router = useRouter();
+
 	const { data: wallets, isLoading, error, refetch } = useWallets();
+
+	const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
 
 	const handleAddWallet = () => {
 		router.push("/(app)/(modals)/add-wallet");
@@ -39,10 +42,15 @@ export default function WalletsScreen() {
 		"bnb-mainnet": require("../../../assets/images/bnb-bnb-logo.png"),
 	};
 
+	const handleOpenWalletTransfers = (wallet: Wallet) => {
+		setSelectedWallet(wallet);
+		router.push(`/(app)/(modals)/wallet/${wallet.id}`);
+	};
+
 	const renderWalletItem = ({ item }: { item: Wallet }) => (
 		<TouchableOpacity
 			style={walletStyles.card}
-			onPress={() => Alert.alert("Carteira", `Detalhes de ${item.name}`)}
+			onPress={() => handleOpenWalletTransfers(item)}
 		>
 			<View style={walletStyles.info}>
 				<Image
