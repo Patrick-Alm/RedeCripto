@@ -8,3 +8,9 @@ export const getWalletTransfers = async (
 
 	return res.data;
 };
+
+export const getUserTransfers = async (): Promise<Transfer[]> => {
+	const res = await api.get("/transfers/user");
+
+	return res.data;
+};
